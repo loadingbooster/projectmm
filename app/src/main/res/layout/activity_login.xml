@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".login">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hi,"
+        android:textColor="#d56840"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome Back"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarlogin"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="20dp"
+        android:indeterminate="true"
+        app:backgroundTint="@null" />
+
+    <EditText
+        android:id="@+id/usernamefield"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/editextedges"
+        android:gravity="center_vertical"
+        android:hint="Number/Email"
+        android:textColor="@color/black"
+        android:contentDescription="enter username"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/uidalert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:layout_marginBottom="5dp"
+        android:text="Incorrect Username" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/editextedges"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/passwordfield"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Password"
+            android:longClickable="false"
+            android:textColor="@color/black"
+            android:background="@null"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/viewpass"
+            android:inputType="textPassword"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/viewpass"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/eye" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/passalert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="enter password"
+        android:text="Incorrect Password" />
+
+    <Button
+        android:id="@+id/loginbtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/curved_edges"
+        android:text="LOG IN"
+        android:textSize="20sp"
+        android:contentDescription="Login Button"
+        app:backgroundTint="@color/orange" />
+
+
+</LinearLayout>
