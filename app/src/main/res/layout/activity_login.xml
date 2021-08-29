@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/red"
         android:layout_marginBottom="5dp"
-        android:text="Incorrect Username" />
+        android:text="! Incorrect Username" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,7 +97,17 @@
         android:textColor="@color/red"
         android:layout_marginBottom="15dp"
         android:contentDescription="enter password"
-        android:text="Incorrect Password" />
+        android:text="! Incorrect Password" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:text="Forgot Password?"/>
 
     <Button
         android:id="@+id/loginbtn"
