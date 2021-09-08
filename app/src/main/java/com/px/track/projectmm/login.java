@@ -3,6 +3,8 @@ package com.px.track.projectmm;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,9 +17,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class login extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
+public class login extends AppCompatActivity {
+    private static final String apiurl="http:// 192.168.208.1/aws.com/login_maker.php";
     //Declaring the variables for editfields username and password
+
     EditText usernamefield, passwordfield;
     //These are the altert text below the edittext to alert the user of wrong username or password
     TextView uidalert,passalert;
@@ -35,6 +45,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+
 
         usernamefield = findViewById(R.id.usernamefield);
         passwordfield = findViewById(R.id.passwordfield);
@@ -67,7 +78,7 @@ public class login extends AppCompatActivity {
                     passwordfield.setTransformationMethod(new PasswordTransformationMethod());
                     visible = 0;
                 }
-                
+
             }
         });
 
@@ -112,6 +123,11 @@ public class login extends AppCompatActivity {
                     viewpass.setVisibility(View.VISIBLE);
                     if(usernamefield.getText().toString().trim().length() > 0){
                         login.setEnabled(true);
+
+
+
+
+
                     }
                 }
                 else{
@@ -128,21 +144,77 @@ public class login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           ////////////////////#################    Don't change this below this####################//////
+
+
+                ////////////////////#################    Don't change this below this####################//////
                 //hiding the password error below password field
                 passerror(false);
                 ///hiding the username error below username field
                 uierror(false);
                 ///making the loadbar visible///
                 loginload.setVisibility(View.VISIBLE);
-       /////////////////////////############# Don't change code above this##############################////
+
+
+                //
+                //
+                String qry="?usernamefield="+usernamefield.getText().toString().trim()+"&passwordfield="+passwordfield.getText().toString().trim();
+
+                class dbprocess extends AsyncTask<String,Void,String>
+                {
+                    @Override
+                    protected  void onPostExecute(String data)
+                    {
+                        if(data.equals("found"))
+                        {
+                            SharedPreferences sp=getSharedPreferences("credentials",MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sp.edit();
+                            editor.putString("uname",usernamefield.getText().toString());
+                            editor.commit();
+
+                        }
+                        else
+                        {
+                            usernamefield.setText("");
+                            passwordfield.setText("");
+
+                        }
+                    }
+                    @Override
+                    protected String doInBackground(String... params)
+                    {
+                        String furl=params[0];
+
+                        try
+                        {
+                            java.net.URL url=new URL(furl);
+                            HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+                            BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                            return br.readLine();
+
+                        }catch (Exception ex)
+                        {
+                            return ex.getMessage();
+                        }
+                    }
+                }
+
+                dbprocess obj=new dbprocess();
+                obj.execute(apiurl+qry);
+
+            }
+
+            /////////////////////////############# Don't change code above this##############################////
                 /////write your backed code below this/////
                 ////call functions passerror and uierror and pass true as parameter to show password error and userid error respectively.
-                ///pass in true to the function  "userverified"  to login the user after successful db verification.
-            }
+                ///pass in true to the function  "userverified"  to login the user after successful db verification.\
+
+
+
         });
 
     }
+    
     //call this function when the username is wrong
     private void uierror(boolean result){
         if(result){
@@ -170,8 +242,9 @@ public class login extends AppCompatActivity {
         if(verified){
             Toast.makeText(this, "User Verified", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this,dashboard.class);
-            startActivity(intent);
+
             finish();
+
         }
     }
 
